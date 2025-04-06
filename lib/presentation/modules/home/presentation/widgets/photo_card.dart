@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:wall_paper_app/core/services/theme_service/theme_service.dart';
-import 'package:wall_paper_app/core/utils/app_colors.dart';
 import 'package:wall_paper_app/core/utils/app_k_border_radius.dart';
 import 'package:wall_paper_app/core/utils/app_k_padding.dart';
 import 'package:wall_paper_app/core/utils/app_style.dart';

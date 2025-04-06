@@ -4,6 +4,7 @@ import '../../../presentation/modules/home/data/repositories/fetch_image_repo_im
 import '../../../presentation/modules/home/domain/repositories/fetch_image_repository.dart';
 import '../../../presentation/modules/home/domain/use_cases/fetch_image_usecase.dart';
 import '../../../presentation/modules/home/presentation/manager/random_image_fetch_bloc/random_image_fetch_bloc.dart';
+import '../../../presentation/modules/search/presentation/manager/search_cubit/search_bloc.dart';
 import '../../base/base_client/base_api_micro.dart';
 import '../../base/base_service/base_service.dart';
 import '../../utils/app_type_def.dart';
@@ -46,5 +47,6 @@ class InjectorService extends BaseService<FVoid, void> {
 
   FRVoid initBloc() async {
     inject.registerFactory(() => RandomImageFetchBloc(inject()));
+    inject.registerFactory(() => SearchBloc(inject()));
   }
 }

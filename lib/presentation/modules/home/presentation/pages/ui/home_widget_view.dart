@@ -11,9 +11,9 @@ class _HomeWidgetView extends WidgetView<_HomeWidgetView, _MyHomePageState> {
         child: Column(
           children: [
             // SearchHomePage(isFromHome: true,),
-            TabBarWidgetHome(tabs: ["Cricket", "Nature", "God", "Ram Ji"],),
+            TabBarWidgetHome(tabs: state._generatedTabs, tabController: state._tabController,),
             Expanded(
-              child: RandomPhotoList()
+              child: RandomPhotoList(tabController: state._tabController,)
             ),
           ],
         ),

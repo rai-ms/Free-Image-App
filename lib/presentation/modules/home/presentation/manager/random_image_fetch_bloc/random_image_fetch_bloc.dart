@@ -17,6 +17,7 @@ class RandomImageFetchBloc extends Bloc<RandomImageFetchEvent, RandomImageFetchS
   RandomImageFetchBloc(this._fetchImageUseCase) : super(RandomImageFetchState<ImageResponseModel>()) {
     on<FetchDataInitEvent>(_onFetchDataInit);
     on<FetchDataPaginationEvent>(_onFetchDataPagination);
+    on<FetchDataTabPaginationEvent>(_onFetchDataTabPagination);
     on<StopDataFetchEvent>(_onStopDataFetch);
     on<FetchDataTabEvent>(_onFetchDataTab);
   }
@@ -44,13 +45,14 @@ class RandomImageFetchBloc extends Bloc<RandomImageFetchEvent, RandomImageFetchS
   Future<void> _onFetchDataPagination(FetchDataPaginationEvent event, Emitter<RandomImageFetchState<ImageResponseModel>> emit) async {
     try {
       emit(state.addPaginationLoading(event: event));
-      var res = await _fetchImageUseCase(params: ImageRequestModel(event.pageNo, event.eventName?.toLowerCase() ?? "random"));
+      var res = await _fetchImageUseCase(params: ImageRequestModel(state.randomPageNo+1, "random"));
       if(res.statusCode == HttpStatus.ok){
         log.d("Received Data in pagination is ${res.data}");
         ImageResponseModel model = ImageResponseModel.fromJson(res.data);
         log.d("Image length in pagination is ${model.photos?.length}");
         emit(state.copyWith(
           state: state.success,
+          randomPageNo: state.randomPageNo+1,
           data: state.data?.copyWith(
               photos: [...?state.data?.photos, ...?model.photos]
             )
@@ -68,22 +70,23 @@ class RandomImageFetchBloc extends Bloc<RandomImageFetchEvent, RandomImageFetchS
 
   Future<void> _onFetchDataTab(FetchDataTabEvent event, Emitter<RandomImageFetchState<ImageResponseModel>> emit) async {
     try {
-      if(event.pageNo == 1) {
-        emit(state.copyWith(state: state.loading));
-      } else {
-        emit(state.addPaginationLoading(event: event));
+      var tabType = TabType.fromString(event.eventName);
+      if(tabType.isRandomImage){
+        emit(state.copyWith(tabType: tabType, eventName: event.eventName));
+        return;
       }
-      var res = await _fetchImageUseCase(params: ImageRequestModel(event.pageNo, event.eventName.toLowerCase()));
+      log.d("Event NAME is ${event.eventName}");
+      emit(state.copyWith(state: state.loading, tabType: tabType, eventName: event.eventName.toLowerCase()));
+      var res = await _fetchImageUseCase(params: ImageRequestModel(1, event.eventName.toLowerCase()));
       if(res.statusCode == HttpStatus.ok){
         log.d("Received Data in TabBar is ${res.data}");
         ImageResponseModel model = ImageResponseModel.fromJson(res.data);
         log.d("Image length in TabBar is ${model.photos?.length}");
         emit(state.copyWith(
-          state: state.success,
-          data: (event.pageNo == 1)? model : state.data?.copyWith(
-              photos: [...?state.data?.photos, ...?model.photos]
-            )
-          )
+            tabPageNumber: 1,
+            otherTabModel: model,
+            state: state.success,
+          ),
         );
       }
       else{
@@ -91,6 +94,34 @@ class RandomImageFetchBloc extends Bloc<RandomImageFetchEvent, RandomImageFetchS
       }
     } catch (error) {
       log.e("Error while data parse tab bar $error");
+      emit(state.copyWith(state: state.failed, error: error.toString()));
+    }
+  }
+
+
+  Future<void> _onFetchDataTabPagination(FetchDataTabPaginationEvent event, Emitter<RandomImageFetchState<ImageResponseModel>> emit) async {
+    try {
+      log.d("Event Name is ${state.eventName}");
+      emit(state.addPaginationLoading(event: event));
+      var res = await _fetchImageUseCase(params: ImageRequestModel(state.tabPageNumber+1, state.eventName ?? "random"));
+      if(res.statusCode == HttpStatus.ok){
+        log.d("Received Data in pagination is ${res.data}");
+        ImageResponseModel model = ImageResponseModel.fromJson(res.data);
+        log.d("Image length in pagination is ${model.photos?.length} ${state.otherTabModel?.photos?.length}");
+        emit(state.copyWith(
+            state: state.success,
+            tabPageNumber: state.tabPageNumber+1,
+            otherTabModel: state.otherTabModel?.copyWith(
+                photos: [...?state.otherTabModel?.photos, ...?model.photos]
+            )
+        )
+        );
+      }
+      else{
+        emit(state.copyWith(state: state.failed));
+      }
+    } catch (error) {
+      log.e("Error while data parse in pagination $error");
       emit(state.copyWith(state: state.failed, error: error.toString()));
     }
   }

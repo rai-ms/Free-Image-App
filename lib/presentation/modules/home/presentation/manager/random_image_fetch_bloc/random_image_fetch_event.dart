@@ -5,9 +5,7 @@ sealed class RandomImageFetchEvent extends BlocEvent{}
 class FetchDataInitEvent extends RandomImageFetchEvent{}
 
 class FetchDataPaginationEvent extends RandomImageFetchEvent{
-  final int pageNo;
-  final String? eventName;
-  FetchDataPaginationEvent(this.pageNo, {this.eventName});
+  FetchDataPaginationEvent();
 }
 
 class FetchDataTabEvent extends RandomImageFetchEvent{
@@ -15,5 +13,12 @@ class FetchDataTabEvent extends RandomImageFetchEvent{
   final String eventName;
   FetchDataTabEvent({this.pageNo = 1, required this.eventName});
 }
+
+class FetchDataTabPaginationEvent extends RandomImageFetchEvent{
+  final int pageNo;
+  FetchDataTabPaginationEvent({this.pageNo = 1});
+}
+
+class BackToRandomList extends RandomImageFetchEvent{}
 
 class StopDataFetchEvent extends RandomImageFetchEvent{}

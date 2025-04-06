@@ -7,7 +7,8 @@ import '../../domain/entities/image_model_search_home.dart';
 import '../manager/random_image_fetch_bloc/random_image_fetch_bloc.dart';
 
 class RandomPhotoList extends StatefulWidget {
-  const RandomPhotoList({super.key});
+  const RandomPhotoList({super.key, required this.tabController});
+  final TabController tabController;
 
   @override
   State<RandomPhotoList> createState() => _RandomPhotoListState();
@@ -17,7 +18,6 @@ class _RandomPhotoListState extends State<RandomPhotoList> {
 
 
   late final ScrollController _scrollController;
-  int _page = 2;
 
   @override
   void initState() {
@@ -30,8 +30,11 @@ class _RandomPhotoListState extends State<RandomPhotoList> {
     if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 200) {
       final bloc = context.read<RandomImageFetchBloc>();
       if (!bloc.state.isPaginationLoading) {
-        bloc.add(FetchDataPaginationEvent(_page));
-        _page++;
+        if(bloc.state.tabType.isRandomImage) {
+          bloc.add(FetchDataPaginationEvent());
+        } else {
+          bloc.add(FetchDataTabPaginationEvent());
+        }
       }
     }
   }
@@ -58,7 +61,7 @@ class _RandomPhotoListState extends State<RandomPhotoList> {
             ),
           );
         }
-        var photos = randomImageFetchState.data?.photos;
+        var photos = randomImageFetchState.tabType.isImage? randomImageFetchState.otherTabModel?.photos :randomImageFetchState.data?.photos;
         return ListView.builder(
           controller: _scrollController,
           itemCount: (photos?.length ?? 0) + (randomImageFetchState.isPaginationLoading ? 1 : 0),

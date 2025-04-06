@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "890681334096",
+    "project_id": "free-image-app",
+    "storage_bucket": "free-image-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:890681334096:android:b8b7585d42d2f5be00b455",
+        "android_client_info": {
+          "package_name": "com.wallpaper.raims.wall_paper_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDymnhv0WR3XTCwPJ1OABlGS8ziXykULi0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

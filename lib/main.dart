@@ -35,6 +35,9 @@ void main() {
 
 FVoid appInit() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   MobileAds.instance.initialize();
   OrientationExtension.lockVertical();
   await StorageService.service.init();

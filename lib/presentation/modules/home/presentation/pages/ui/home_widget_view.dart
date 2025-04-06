@@ -10,7 +10,7 @@ class _HomeWidgetView extends WidgetView<_HomeWidgetView, _MyHomePageState> {
       body: SafeArea(
         child: Column(
           children: [
-            // SearchHomePage(isFromHome: true,),
+            SearchHomePage(isFromHome: true,),
             TabBarWidgetHome(tabs: state._generatedTabs, tabController: state._tabController,),
             Expanded(
               child: RandomPhotoList(tabController: state._tabController,)

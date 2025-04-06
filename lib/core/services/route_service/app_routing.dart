@@ -5,6 +5,7 @@ import 'package:wall_paper_app/core/base/base_service/base_service.dart';
 import 'package:wall_paper_app/core/base/logger/app_logger_impl.dart';
 import 'package:wall_paper_app/core/utils/app_style.dart';
 import '../../../presentation/modules/home/presentation/pages/controller/home_controller.dart';
+import '../../../presentation/modules/search/presentation/pages/controller/search_controller.dart';
 import 'route_names.dart';
 
 @protected
@@ -44,6 +45,13 @@ class RouteService extends BaseService<void, void> {
         pageBuilder: (context, state) => const NoTransitionPage(
           child: MyHomePage(),
         ),
+        routes: [
+          GoRoute(
+            path: RoutesName.searchPage,
+            name: RoutesName.searchPage,
+            builder: (ctx, state) => SearchImageController()
+          )
+        ]
       ),
     ],
   );

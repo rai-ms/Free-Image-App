@@ -10,17 +10,7 @@ class _SearchWidgetView extends WidgetView<_SearchWidgetView, _SearchControllerS
       backgroundColor: appTheme.scaffoldBackgroundColor,
       appBar: AppBar(
         backgroundColor: appTheme.scaffoldBackgroundColor,
-        leading: InkWell(
-          onTap: context.pop,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: FaIcon(
-              FontAwesomeIcons.arrowLeft,
-              size: 20,
-              color: appTheme.photoClickIconColor,
-            ),
-          ),
-        ),
+        leading: backIcon(context),
         leadingWidth: 80,
         title: Text("Search", style: AppStyles.medium.medium.white,),
       ),
@@ -31,6 +21,20 @@ class _SearchWidgetView extends WidgetView<_SearchWidgetView, _SearchControllerS
             Space.h16,
             Expanded(child: SearchList()),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget backIcon(BuildContext context) {
+    return InkWell(
+      onTap: context.pop,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: FaIcon(
+          FontAwesomeIcons.arrowLeft,
+          size: 20,
+          color: appTheme.photoClickIconColor,
         ),
       ),
     );

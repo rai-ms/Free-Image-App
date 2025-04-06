@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -16,6 +17,7 @@ import 'core/services/theme_service/theme_service.dart';
 import 'core/utils/app_type_def.dart';
 import 'core/utils/orientation_extension.dart';
 import 'core/utils/size_utils.dart';
+import 'firebase_options.dart';
 
 void main() {
   unawaited(

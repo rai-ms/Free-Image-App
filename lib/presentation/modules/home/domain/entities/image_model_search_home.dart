@@ -62,6 +62,8 @@ class Photo {
 
   String get priorityImage => src?.priorityImage ?? "";
 
+  String get priorityDownloadImage => src?.priorityDownloadImage ?? "";
+
   Photo({
     this.id,
     this.width,
@@ -160,6 +162,8 @@ class Src {
   });
 
   String get priorityImage => tiny ?? small ?? medium ?? large ?? original ?? large2X ?? "";
+
+  String get priorityDownloadImage =>  large2X ?? original ?? large ?? medium ?? small ?? tiny ?? "";
 
   factory Src.fromJson(Map<String, dynamic> json) => Src(
     original: json["original"],

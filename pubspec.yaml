@@ -52,6 +52,7 @@ dependencies:
   cached_network_image:
   flutter_cache_manager:
   internet_connection_checker_plus: ^2.5.0
+  share_plus:
 
 dev_dependencies:
   flutter_test:

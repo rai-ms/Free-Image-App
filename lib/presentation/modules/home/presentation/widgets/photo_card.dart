@@ -6,6 +6,7 @@ import 'package:wall_paper_app/core/utils/app_k_padding.dart';
 import 'package:wall_paper_app/core/utils/app_style.dart';
 import 'package:wall_paper_app/core/utils/utility_helper.dart';
 import 'package:wall_paper_app/presentation/modules/home/presentation/widgets/user_logo.dart';
+import '../../../../../core/utils/share_image.dart';
 import '../../../../../core/utils/space.dart';
 import '../../domain/entities/image_model_search_home.dart';
 
@@ -43,7 +44,13 @@ class PhotoCard extends StatelessWidget {
                 fit: BoxFit.cover,
                 cachedExtent: true
               ),
-              likeWidget,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  likeWidget,
+                  shareDownloadWidget
+                ],
+              ),
             ],
           ),
           if(!isLast)Space.h10,
@@ -93,6 +100,45 @@ class PhotoCard extends StatelessWidget {
             size: 20,
             color: appTheme.photoClickIconColor,
           ),
+        ],
+      ),
+    ),
+  );
+
+  Widget get shareDownloadWidget => Center(
+    child: Container(
+      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      decoration: BoxDecoration(
+          border: Border.all(color: appTheme.likeWidgetBorderColor!),
+          color: appTheme.likeWidgetBackgroundColor,
+          borderRadius: CircularBorderRadius.b30
+      ),
+      child: Row(
+        children: [
+          InkWell(
+            onTap: () {
+              ShareImage().shareImage(photo.priorityDownloadImage, photo.userName);
+            },
+            child: FaIcon(
+              FontAwesomeIcons.share,
+              size: 20,
+              color: appTheme.photoClickIconColor,
+            ),
+          ),
+          Space.w10,
+          likeDivider,
+          Space.w10,
+          InkWell(
+            onTap:() {
+              ShareImage().saveImageLocally(photo.priorityDownloadImage);
+            },
+            child: FaIcon(
+              FontAwesomeIcons.download,
+              size: 20,
+              color: appTheme.photoClickIconColor,
+            ),
+          ),
+
         ],
       ),
     ),

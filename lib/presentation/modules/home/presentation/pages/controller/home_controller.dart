@@ -20,7 +20,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
 
   late final RandomImageFetchBloc _randomImageFetchBloc;
   late final TabController _tabController;
-  late final List<String> _generatedTabs = ["Random", "Cricket", "Nature", "God", "Ram Ji"];
+  late final List<String> _generatedTabs = ["Random", "Trending", "Popular", "Cricket", "Nature", "Garden"];
 
   @override
   void initState() {

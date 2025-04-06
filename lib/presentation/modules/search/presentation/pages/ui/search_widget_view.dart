@@ -11,8 +11,11 @@ class _SearchWidgetView extends WidgetView<_SearchWidgetView, _SearchControllerS
       appBar: AppBar(
         backgroundColor: appTheme.scaffoldBackgroundColor,
         leading: backIcon(context),
-        leadingWidth: 80,
-        title: Text("Search", style: AppStyles.medium.medium.white,),
+        centerTitle: true,
+        title: Text("Search",
+          style: AppStyles.large.semiBold.white,
+          textAlign: TextAlign.start,
+        ),
       ),
       body: SafeArea(
         child: Column(

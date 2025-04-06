@@ -12,6 +12,12 @@
         android:label="Free Image"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-5186419636569153~9362534446"/>
+
         <activity
             android:name=".MainActivity"
             android:exported="true"

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:wall_paper_app/presentation/my_app.dart';
 import 'core/base/bloc_base/app_bloc_observer.dart';
 import 'core/base/logger/app_logger_impl.dart';
@@ -34,6 +35,7 @@ void main() {
 
 FVoid appInit() async {
   WidgetsFlutterBinding.ensureInitialized();
+  MobileAds.instance.initialize();
   OrientationExtension.lockVertical();
   await StorageService.service.init();
   await FlavourService.service.init();
